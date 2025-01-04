@@ -1,15 +1,16 @@
 from models import AddressBook
-from commands import add_contact, change_contact, show_phones, show_all, add_birthday, show_birthday, birthdays, show_help
+from commands import add_contact, change_contact, show_phones, show_all, add_birthday, show_birthday, birthdays, show_help, load_data, save_data
 from utils import parse_input
 
 def main():
-    book = AddressBook()
+    book = load_data()
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
-        command, *args = parse_input(user_input)
+        command, args = parse_input(user_input)
 
         if command in ["close", "exit", "quit", "q"]:
+            save_data(book)
             print("Good bye!")
             break
         elif command == "hello":

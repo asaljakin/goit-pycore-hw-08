@@ -1,8 +1,22 @@
+import pickle
 from models import AddressBook, Record, Phone, Birthday
 from utils import input_error
 
+def save_data(book, filename="addressbook.pkl"): 
+    with open(filename, "wb") as f:
+         pickle.dump(book, f) 
+
+def load_data(filename="addressbook.pkl"):
+    try:
+         with open(filename, "rb") as f:
+             return pickle.load(f)
+    except FileNotFoundError:
+        return AddressBook()
+
 @input_error
 def add_contact(args, book: AddressBook):
+    if len(args) < 2:
+        return "Error: Not enough arguments. Expected at least 2 (name and phone)."
     name, phone, *_ = args
     record = book.find(name)
     message = "Contact updated."
